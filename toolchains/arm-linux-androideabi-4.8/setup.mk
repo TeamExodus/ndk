@@ -65,6 +65,10 @@ TARGET_arm_release_CFLAGS :=  -O2 \
                               -funswitch-loops     \
                               -finline-limit=300
 
+ifneq ($(USE_EXTRA_STACK_CANARIES),true)
+TARGET_arm_release_CFLAGS += $(EXODUS_EXTRA_NDK_FLAGS)
+endif
+
 TARGET_thumb_release_CFLAGS := -mthumb \
                                -Os \
                                -g \
@@ -72,6 +76,10 @@ TARGET_thumb_release_CFLAGS := -mthumb \
                                -fomit-frame-pointer \
                                -fno-strict-aliasing \
                                -finline-limit=64
+
+ifneq ($(USE_EXTRA_STACK_CANARIES),true)
+TARGET_thumb_release_CFLAGS += $(EXODUS_EXTRA_NDK_FLAGS)
+endif
 
 # When building for debug, compile everything as arm.
 TARGET_arm_debug_CFLAGS := $(TARGET_arm_release_CFLAGS) \

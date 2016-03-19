@@ -67,6 +67,10 @@ TARGET_arm64_release_CFLAGS :=  -O2 \
                                 -fomit-frame-pointer \
                                 -fstrict-aliasing
 
+ifneq ($(USE_EXTRA_STACK_CANARIES),true)
+TARGET_arm64_release_CFLAGS += $(EXODUS_EXTRA_NDK_FLAGS)
+endif
+
 TARGET_arm64_debug_CFLAGS := $(TARGET_arm64_release_CFLAGS) \
                              -O0 \
                              -UNDEBUG \

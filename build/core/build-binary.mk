@@ -392,6 +392,10 @@ ifneq (,$(call module-has-c++-features,$(LOCAL_MODULE),exceptions))
     LOCAL_CPPFLAGS += -fexceptions
 endif
 
+ifneq ($(USE_EXTRA_STACK_CANARIES),true)
+    LOCAL_CPPFLAGS += -fno-exceptions
+endif
+
 # If we're using the 'system' STL and use rtti or exceptions, then
 # automatically link against the GNU libsupc++ for now.
 #
