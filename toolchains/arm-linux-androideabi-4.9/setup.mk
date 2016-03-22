@@ -36,10 +36,18 @@ TARGET_C_INCLUDES := \
     $(SYSROOT_INC)/usr/include
 
 ifneq ($(filter $(TARGET_ARCH_ABI), armeabi-v7a armeabi-v7a-hard),)
+ifneq (,$(filter cortex-a15 krait denver,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
+    TARGET_CFLAGS += -mcpu=cortex-a15 \
+                     -mfpu=neon-vfpv4 \
+                     -D__ARM_FEATURE_LPAE=1
+    TARGET_LDFLAGS += -march=armv7-a \
+                     -Wl,--no-fix-cortex-a8
+else
     TARGET_CFLAGS += -march=armv7-a \
                      -mfpu=vfpv3-d16
     TARGET_LDFLAGS += -march=armv7-a \
                      -Wl,--fix-cortex-a8
+endif
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
     TARGET_CFLAGS += -mfloat-abi=softfp
 else
